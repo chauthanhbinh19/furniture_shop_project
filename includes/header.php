@@ -1,8 +1,11 @@
+<script src="/public/js/coreui.bundle.min.js"></script>
 <header class="header header-sticky mb-4">
   <div class="container-fluid">
-    <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
+    <!-- Nút Toggle Sidebar -->
+    <button class="header-toggler" type="button" data-coreui-toggle="unfoldable" data-coreui-target="#sidebar">
       <i class="fas fa-bars"></i>
     </button>
-    <a class="header-brand" href="#">Furniture Shop</a>
+
+    <a class="header-brand" href="#">Admin Panel</a>
   </div>
 </header>
