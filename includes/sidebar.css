@@ -62,11 +62,18 @@
 .sidebar {
   overflow-x: hidden !important;
   overflow-y: hidden !important;
+  width: 250px;
 }
 
 /* Nếu bạn dùng simplebar từ CoreUI thì ẩn luôn thanh scrollbar custom */
 .sidebar .simplebar-scrollbar::before {
   opacity: 0 !important;
 }
+.sidebar-fixed, .sidebar-narrow-unfoldable, .sidebar-overlaid{
+  /* position: relative !important; */
+}
 
+.content-wrapper {
+  margin-left: 250px; 
+}
   

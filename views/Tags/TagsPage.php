@@ -19,9 +19,9 @@ if ($end - $start < $maxVisible - 1) {
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex justify-content-between align-items-center w-100">
-                    <h4 class="mb-0">Customers</h4>
-                    <button class="btn btn-primary" data-coreui-toggle="modal" data-coreui-target="#addCustomerModal">
-                        <i class="cil-user-follow"></i> Add Customer
+                    <h4 class="mb-0">Tags</h4>
+                    <button class="btn btn-primary" data-coreui-toggle="modal" data-coreui-target="#addTagModal">
+                        <i class="cil-user-follow"></i> Add tag
                     </button>
                 </div>
             </div>
@@ -47,7 +47,7 @@ if ($end - $start < $maxVisible - 1) {
                             <input type="text" id="searchInput" name="search"
                                 value="<?= htmlspecialchars($_GET['search'] ?? '') ?>"
                                 class="form-control ps-5 rounded-10 py-2"
-                                placeholder="Search customer name...">
+                                placeholder="Search tag name...">
                         </div>
                     </div>
 
@@ -77,51 +77,36 @@ if ($end - $start < $maxVisible - 1) {
                     <thead class="table-light text-center">
                         <tr>
                             <th>ID</th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Gender</th>
+                            <th>Name</th>
                             <th>Status</th>
                             <th>Created At</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                         <!-- PHP loop example -->
-                        <?php foreach ($data['customers'] as $customer): ?>
+                        <?php foreach ($data['tags'] as $tag): ?>
                             <tr>
-                                <td class="text-center"><?= htmlspecialchars($customer['id']) ?></td>
-                                <td>
-                                    <!-- Hiển thị Avatar -->
-                                    <?php
-                                    $avatar = !empty($customer['image']) ? htmlspecialchars($customer['image']) : 'no-avatar.png';
-                                    ?>
-                                    <img src="../../public/assets/avatars/<?= $avatar ?>" alt="Avatar" class="rounded-circle" width="40" height="40" style="margin-right:5px;">
-
-                                    <!-- Hiển thị Full Name -->
-                                    <?= htmlspecialchars($customer['full_name']) ?>
-                                </td>
-                                <td class="text-center"><?= htmlspecialchars($customer['email']) ?></td>
-                                <td class="text-center"><?= htmlspecialchars($customer['phone_number']) ?></td>
-                                <td class="text-center"><?= htmlspecialchars($customer['gender']) ?></td>
+                                <td><?= htmlspecialchars($tag['id']) ?></td>
+                                <td><?= htmlspecialchars($tag['name']) ?></td>
                                 <td class="text-center">
-                                    <?php if ($customer['status'] === 'active'): ?>
+                                    <?php if ($tag['status'] === 'active'): ?>
                                         <span class="badge bg-success text-white">Active</span>
-                                    <?php elseif ($customer['status'] === 'unactive'): ?>
+                                    <?php elseif ($tag['status'] === 'unactive'): ?>
                                         <span class="badge bg-danger text-white">Unactive</span>
                                     <?php else: ?>
-                                        <span class="badge bg-secondary text-white"><?= htmlspecialchars($customer['status']) ?></span>
+                                        <span class="badge bg-secondary text-white"><?= htmlspecialchars($tag['status']) ?></span>
                                     <?php endif; ?>
                                 </td>
-                                <td class="text-center"><!-- Định dạng ngày tạo tài khoản -->
-                                    <?= date('d-m-Y', strtotime($customer['created_at'])) ?></td>
+                                <td><!-- Định dạng ngày tạo tài khoản -->
+                                    <?= date('d-m-Y', strtotime($tag['created_at'])) ?></td>
                                 <td>
-                                    <button class="btn btn-outline-warning" data-coreui-toggle="modal" data-coreui-target="#editCustomerModal<?= $customer['id'] ?>">
+                                    <button class="btn btn-outline-warning" data-coreui-toggle="modal" data-coreui-target="#editCategoryModal<?= $tag['id'] ?>">
                                         Edit
                                     </button>
-                                    <a href="delete_customer.php?id=<?= $customer['id'] ?>" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                    <a href="delete_category.php?id=<?= $tag['id'] ?>" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</a>
                                     <!-- Include modal update ở đây -->
-                                    <?php include __DIR__ . '/UpdateCustomers.php'; ?>
+                                    <?php include __DIR__ . '/UpdateTags.php'; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -179,5 +164,5 @@ if ($end - $start < $maxVisible - 1) {
     });
 </script>
 <?php
-include 'InsertCustomers.php';
+include 'InsertTags.php';
 ?>

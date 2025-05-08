@@ -19,9 +19,9 @@ if ($end - $start < $maxVisible - 1) {
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex justify-content-between align-items-center w-100">
-                    <h4 class="mb-0">Customers</h4>
-                    <button class="btn btn-primary" data-coreui-toggle="modal" data-coreui-target="#addCustomerModal">
-                        <i class="cil-user-follow"></i> Add Customer
+                    <h4 class="mb-0">Employees</h4>
+                    <button class="btn btn-primary" data-coreui-toggle="modal" data-coreui-target="#addEmployeeModal">
+                        <i class="cil-user-follow"></i> Add Employee
                     </button>
                 </div>
             </div>
@@ -33,7 +33,7 @@ if ($end - $start < $maxVisible - 1) {
         <div class="card-body">
             <!-- New filter section: search box and dropdown -->
             <form method="get" action="" id="filterForm">
-            <div class="row g-3 mb-3 mt-0 align-items-end">
+                <div class="row g-3 mb-3 mt-0 align-items-end">
                     <!-- Search input -->
                     <div class="col-md-4">
                         <label for="searchInput" class="form-label fw-bold">Search</label>
@@ -47,7 +47,7 @@ if ($end - $start < $maxVisible - 1) {
                             <input type="text" id="searchInput" name="search"
                                 value="<?= htmlspecialchars($_GET['search'] ?? '') ?>"
                                 class="form-control ps-5 rounded-10 py-2"
-                                placeholder="Search customer name...">
+                                placeholder="Search employee name...">
                         </div>
                     </div>
 
@@ -88,40 +88,40 @@ if ($end - $start < $maxVisible - 1) {
                     </thead>
                     <tbody>
                         <!-- PHP loop example -->
-                        <?php foreach ($data['customers'] as $customer): ?>
+                        <?php foreach ($data['employees'] as $employee): ?>
                             <tr>
-                                <td class="text-center"><?= htmlspecialchars($customer['id']) ?></td>
+                                <td class="text-center"><?= htmlspecialchars($employee['id']) ?></td>
                                 <td>
                                     <!-- Hiển thị Avatar -->
                                     <?php
-                                    $avatar = !empty($customer['image']) ? htmlspecialchars($customer['image']) : 'no-avatar.png';
+                                    $avatar = !empty($employee['image']) ? htmlspecialchars($employee['image']) : 'no-avatar.png';
                                     ?>
                                     <img src="../../public/assets/avatars/<?= $avatar ?>" alt="Avatar" class="rounded-circle" width="40" height="40" style="margin-right:5px;">
 
                                     <!-- Hiển thị Full Name -->
-                                    <?= htmlspecialchars($customer['full_name']) ?>
+                                    <?= htmlspecialchars($employee['full_name']) ?>
                                 </td>
-                                <td class="text-center"><?= htmlspecialchars($customer['email']) ?></td>
-                                <td class="text-center"><?= htmlspecialchars($customer['phone_number']) ?></td>
-                                <td class="text-center"><?= htmlspecialchars($customer['gender']) ?></td>
+                                <td class="text-center"><?= htmlspecialchars($employee['email']) ?></td>
+                                <td class="text-center"><?= htmlspecialchars($employee['phone_number']) ?></td>
+                                <td class="text-center"><?= htmlspecialchars($employee['gender']) ?></td>
                                 <td class="text-center">
-                                    <?php if ($customer['status'] === 'active'): ?>
+                                    <?php if ($employee['status'] === 'active'): ?>
                                         <span class="badge bg-success text-white">Active</span>
-                                    <?php elseif ($customer['status'] === 'unactive'): ?>
+                                    <?php elseif ($employee['status'] === 'unactive'): ?>
                                         <span class="badge bg-danger text-white">Unactive</span>
                                     <?php else: ?>
-                                        <span class="badge bg-secondary text-white"><?= htmlspecialchars($customer['status']) ?></span>
+                                        <span class="badge bg-secondary text-white"><?= htmlspecialchars($employee['status']) ?></span>
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-center"><!-- Định dạng ngày tạo tài khoản -->
-                                    <?= date('d-m-Y', strtotime($customer['created_at'])) ?></td>
+                                    <?= date('d-m-Y', strtotime($employee['created_at'])) ?></td>
                                 <td>
-                                    <button class="btn btn-outline-warning" data-coreui-toggle="modal" data-coreui-target="#editCustomerModal<?= $customer['id'] ?>">
+                                    <button class="btn btn-outline-warning" data-coreui-toggle="modal" data-coreui-target="#editEmployeeModal<?= $employee['id'] ?>">
                                         Edit
                                     </button>
-                                    <a href="delete_customer.php?id=<?= $customer['id'] ?>" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                    <a href="delete_customer.php?id=<?= $employee['id'] ?>" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</a>
                                     <!-- Include modal update ở đây -->
-                                    <?php include __DIR__ . '/UpdateCustomers.php'; ?>
+                                    <?php include __DIR__ . '/UpdateEmployees.php'; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -179,5 +179,5 @@ if ($end - $start < $maxVisible - 1) {
     });
 </script>
 <?php
-include 'InsertCustomers.php';
+include 'InsertEmployees.php';
 ?>

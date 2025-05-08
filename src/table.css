@@ -1,0 +1,50 @@
+.table, .table th, .table td {
+    border: none; /* Bỏ tất cả các border của bảng */
+    padding: 10px 20px;
+    margin-top: 20px;
+  }
+
+  /* Giới hạn độ dài các cột */
+  .table td {
+    max-width: 200px; /* Giới hạn chiều rộng */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Bo góc cho bảng */
+  .table {
+    border-radius: 10px; /* Bo góc bảng */
+    overflow: hidden; /* Đảm bảo góc bo tròn hoạt động đúng */
+  }
+
+  /* Tùy chỉnh màu nền và viền cho các header */
+  .table thead {
+    background-color: #f8f9fa; /* Màu nền cho header */
+  }
+
+  .table thead tr{
+    border-top: none;
+  }
+  .table thead th{
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  /* Tùy chỉnh màu nền cho các hàng trong bảng */
+  .table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .table tbody tr:hover {
+    background-color: #e0e0e0; /* Màu nền khi hover */
+  }
+
+  /* Đặt chiều cao cho mỗi dòng trong bảng */
+  .table tbody tr {
+    height: 70px; /* Đặt chiều cao mỗi dòng */
+    border-bottom: 1px solid rgb(195, 195, 195);
+  }
+  .bg-soft-white {
+    background-color: rgba(245, 245, 245, 1); /* trắng nhạt */
+}

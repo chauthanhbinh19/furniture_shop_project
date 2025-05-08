@@ -1,4 +1,3 @@
-<script src="/public/js/coreui.bundle.min.js"></script>
 <header class="header header-sticky mb-4">
   <div class="container-fluid">
     <!-- Nút Toggle Sidebar -->

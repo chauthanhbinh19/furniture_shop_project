@@ -1,23 +1,23 @@
 <?php
 require_once __DIR__ . '/../config/connection.php';
 
-class Category {
+class SubCategory
+{
     private $db;
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = Database::getConnection();
     }
 
-    public function all() {
-        $sql = "SELECT * FROM categories";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function all()
+    {
+        return $this->db->query("SELECT * FROM categories")->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getAllCategories($limit, $offset)
+    public function getAllSubCategories($limit, $offset)
     {
-        $sql = "SELECT * FROM categories LIMIT :limit OFFSET :offset";
+        $sql = "SELECT sc.*, c.name as 'category_name' FROM sub_categories sc, categories c 
+        where sc.category_id = c.id LIMIT :limit OFFSET :offset";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
@@ -25,32 +25,39 @@ class Category {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function countCategories()
-    {
-        $stmt = $this->db->query("SELECT COUNT(*) FROM categories");
-        return $stmt->fetchColumn();
-    }
-    public function getFilteredCategories($search, $status, $sort, $limit, $offset)
+    public function countSubCategories()
     {
         try {
-            $sql = "SELECT * FROM categories WHERE 1";
+            $stmt = $this->db->query("SELECT count(*) FROM sub_categories sc, categories c where sc.category_id = c.id");
+            $count = $stmt->fetchColumn();
+
+            return $count;
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+    public function getFilteredSubCategories($search, $status, $sort, $limit, $offset)
+    {
+        try {
+            $sql = "SELECT sc.*, c.name as 'category_name' FROM sub_categories sc, categories c 
+            where sc.category_id = c.id";
             // Tìm kiếm
             if (!empty($search)) {
-                $sql .= " AND (id = :exactId OR 
-                           name LIKE :search OR 
-                           description LIKE :search";
+                $sql .= " AND (sc.id = :exactId OR 
+                           sc.name LIKE :search OR 
+                           sc.description LIKE :search)";
             }
 
             // Lọc theo trạng thái
             if (!empty($status) && $status !== 'all') {
-                $sql .= " AND status = :status";
+                $sql .= " AND sc.status = :status";
             }
 
             // Sắp xếp
             if ($sort === 'oldest') {
-                $sql .= " ORDER BY created_at ASC";
+                $sql .= " ORDER BY sc.created_at ASC";
             } else {
-                $sql .= " ORDER BY created_at DESC"; // mặc định newest
+                $sql .= " ORDER BY sc.created_at DESC"; // mặc định newest
             }
 
             $sql .= " LIMIT :limit OFFSET :offset";
@@ -84,27 +91,27 @@ class Category {
             return $th;
         }
     }
-    public function getFilteredCategoriesCount($search, $status, $sort)
+    public function getFilteredSubCategoriesCount($search, $status, $sort)
     {
         try {
-            $sql = "SELECT count(*) FROM categories WHERE 1";
+            $sql = "SELECT count(*) FROM sub_categories sc, categories c where sc.category_id = c.id";
             // Tìm kiếm
             if (!empty($search)) {
-                $sql .= " AND (id = :exactId OR 
-                           name LIKE :search OR 
-                           description LIKE :search";
+                $sql .= " AND (sc.id = :exactId OR 
+                           sc.name LIKE :search OR 
+                           sc.description LIKE :search)";
             }
 
             // Lọc theo trạng thái
             if (!empty($status) && $status !== 'all') {
-                $sql .= " AND status = :status";
+                $sql .= " AND sc.status = :status";
             }
 
             // Sắp xếp
             if ($sort === 'oldest') {
-                $sql .= " ORDER BY created_at ASC";
+                $sql .= " ORDER BY sc.created_at ASC";
             } else {
-                $sql .= " ORDER BY created_at DESC"; // mặc định newest
+                $sql .= " ORDER BY sc.created_at DESC"; // mặc định newest
             }
 
             $stmt = $this->db->prepare($sql);
@@ -131,15 +138,16 @@ class Category {
             return $th;
         }
     }
-    public function insertCategory($name, $description, $status)
+    public function insertSubCategory($name, $description, $status, $category)
     {
         try {
             // Câu lệnh insert
-            $sql = "INSERT INTO categories (name, description, status) 
-                VALUES (:name, :description, :status)";
+            $sql = "INSERT INTO sub_categories (category_id, name, description, status) 
+                VALUES (:category_id, :name, :description, :status)";
 
             $stmt = $this->db->prepare($sql);
 
+            $stmt->bindParam(':category_id', $category);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':description', $description);
             $stmt->bindParam(':status', $status);
@@ -154,12 +162,12 @@ class Category {
             return 0;
         }
     }
-    public function updateCategory($id, $name, $description, $status)
+    public function updateSubCategory($id, $name, $description, $status, $category)
     {
         try {
             // Câu lệnh UPDATE
-            $sql = "UPDATE categories 
-                SET name = :name, description = :description, status = :status
+            $sql = "UPDATE sub_categories 
+                SET name = :name, description = :description, status = :status, category_id = :category_id
                 WHERE id = :id";
 
             $stmt = $this->db->prepare($sql);
@@ -169,6 +177,7 @@ class Category {
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':description', $description);
             $stmt->bindParam(':status', $status);
+            $stmt->bindParam(':category_id', $category);
 
             // Thực thi truy vấn
             if ($stmt->execute()) {

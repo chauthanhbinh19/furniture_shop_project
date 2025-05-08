@@ -1,0 +1,100 @@
+.input-rounded {
+    height: 48px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+.input-rounded input {
+    border-radius: 50px !important;
+    height: 100%;
+    width: 600px;
+}
+
+.input-rounded .input-group-text {
+    border-radius: 50px 0 0 50px !important;
+}
+.w-20 {
+    width: 20% !important;
+}
+.rounded-10 {
+    border-radius: 10px !important;
+}
+.rounded-20 {
+    border-radius: 20px !important;
+}
+
+.rounded-30 {
+    border-radius: 30px !important;
+}
+.search-input-group {
+    border: 2px solid transparent; /* Border mặc định */
+    transition: border-color 0.3s ease; /* Thêm hiệu ứng chuyển tiếp */
+}
+
+.search-input-group:focus-within {
+    border-color: #6f42c1; /* Màu viền khi focus (thay đổi màu theo ý bạn) */
+    box-shadow: 0 0 5px rgba(111, 66, 193, 0.5); /* Thêm bóng để làm nổi bật */
+}
+
+.search-input-group .input-group-text {
+    border: none; /* Loại bỏ viền phải của icon */
+}
+
+.search-input-group input:focus {
+    border-color: transparent; /* Giữ cho border của input không thay đổi */
+    outline: none;
+}
+.border-dashed {
+    border-style: dashed !important;
+    border-width: 2px !important;
+}
+.upload-area {
+    border-style: dashed;
+    border-width: 3px;
+    border-color: #ced4da;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.upload-area:hover {
+    background-color: #e9ecef;
+}
+
+.preview-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #dee2e6;
+}
+
+.preview-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+    border: 1px solid #6c757d;
+}
+
+.preview-filename {
+    font-size: 0.9rem;
+    word-break: break-all;
+}
+
+.preview-size {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+.delete-btn {
+    border: none;
+    background: none;
+    color: #dc3545;
+    margin-left: auto;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    color: #a71d2a;
+}
